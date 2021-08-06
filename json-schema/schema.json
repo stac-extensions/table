@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/template/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
+  "$id": "https://stac-extensions.github.io/table/v1.0.0/schema.json#",
+  "title": "Table Extension",
+  "description": "STAC Table Extension for STAC Items and STAC Collections.",
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
@@ -26,7 +26,7 @@
                 {
                   "$comment": "Require fields here for Item Properties.",
                   "required": [
-                    "template:new_field"
+                    "table:columns"
                   ]
                 },
                 {
@@ -70,7 +70,7 @@
             {
               "$comment": "Require fields here for Collections (top-level).",
               "required": [
-                "template:new_field"
+                "table:columns"
               ]
             },
             {
@@ -129,7 +129,7 @@
           }
         },
         {
-          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existance of the properties, but not the schema of the summaries.",
+          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
           "required": [
             "summaries"
           ],
@@ -152,58 +152,112 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+            "const": "https://stac-extensions.github.io/table/v1.0.0/schema.json"
           }
         }
       }
     },
     "require_any_field": {
-      "$comment": "Please list all fields here so that we can force the existance of one of them in other parts of the schemas.",
+      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
       "anyOf": [
-        {"required": ["template:new_field"]},
-        {"required": ["template:xyz"]},
-        {"required": ["template:another_one"]}
+        {
+          "required": [
+            "table:columns"
+          ]
+        }
       ]
     },
     "fields": {
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
       "properties": {
-        "template:new_field": {
-          "type": "string"
+        "table:columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object"
+              }
+            }
+          },
+          "table:geo_arrow_metadata": {
+            "type": "object",
+            "required": [
+              "schema_version"
+            ],
+            "properties": {
+              "primary_column": {
+                "type": "string"
+              },
+              "schema_version": {
+                "type": "string"
+              },
+              "creator": {
+                "$ref": "#/definitions/creator"
+              },
+              "columns": {
+                "$ref": "#/definitions/geo_column"
+              }
+            }
+          }
         },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
+        "additionalProperties": false
+      },
+      "creator": {
+        "type": "object",
+        "required": [
+          "library",
+          "version"
+        ],
+        "properties": {
+          "library": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "geo_column": {
+        "type": "object",
+        "required": [
+          "crs"
+        ],
+        "properties": {
+          "crs": {
+            "type": "string"
+          },
+          "encoding": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "array",
+            "oneOf": [
+              {
+                "minItems": 4,
+                "maxItems": 4
+              },
+              {
+                "minItems": 6,
+                "maxItems": 6
+              }
+            ],
+            "items": {
               "type": "number"
             }
           }
-        }, 
-        "template:another_one": {
-          "type": "array", 
-          "items": {
-            "type": "number"
-          }
         }
-      },
-      "patternProperties": {
-        "^(?!template:)": {
-          "$comment": "Above, change `template` to the prefix of this extension"
-        }
-      },
-      "additionalProperties": false
+      }
     }
   }
 }

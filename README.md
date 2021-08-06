@@ -1,13 +1,13 @@
-# Template Extension Specification
+# Table Extension Specification
 
-- **Title:** Template
-- **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
+- **Title:** Parquet Table
+- **Identifier:** <https://stac-extensions.github.io/parquet-table/v1.0.0/schema.json>
+- **Field Name Prefix:** parquet
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @TomAugspurger
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+This document explains the table Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 This is the place to add a short introduction.
 
 - Examples:
@@ -18,36 +18,48 @@ This is the place to add a short introduction.
 
 ## Item Properties and Collection Fields
 
-| Field Name           | Type                      | Description |
-| -------------------- | ------------------------- | ----------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field... |
-| template:another_one | \[number]                 | Describe the field... |
+|        Field Name        |                          Type                           |                       Description                       |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------- |
+| table:columns            | [ [Column Object](#column-object) ]                     | **REQUIRED**. A list of objects describing each column. |
+| table:geo_arrow_metadata | [Geo Arrow Metadata Object](#geo-arrow-metadata-object) | The geospatial metadata for this table.                 |
 
-### Additional Field Information
+### Column Object
 
-#### template:new_field
+Column objects contain information about each colum in the table.
 
-This is a much more detailed description of the field `template:new_field`...
+| Field Name  |       Type       |                                                        Description                                                         |
+| ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| name        | number           | **REQUIRED**. The column name                                                                                              |
+| description | string           | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
+| metadata    | Map<string, Any> | Additional metadata for the column                                                                                         |
 
-### XYZ Object
+### Geo Arrow Metadata Object
 
-This is the introduction for the purpose and the content of the XYZ Object...
+|   Field Name   |                         Type                         |                                Description                                |
+| -------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| primary_column | string                                               | The primary geometry column name. Used by systems like geopandas.         |
+| schema_version | string                                               | **REQUIRED**. The version of geo-arrow-spec the dataset was written with. |
+| creator        | Map<string, [Creator Object](#creator-object)>       | Information describing the system used to write the dataset.              |
+| columns        | Map<string, [Geo Column Object](#geo-column-object)> | The geometry information for each geometry column.                        |
 
-| Field Name  | Type   | Description |
-| ----------- | ------ | ----------- |
-| x           | number | **REQUIRED**. Describe the required field... |
-| y           | number | **REQUIRED**. Describe the required field... |
-| z           | number | **REQUIRED**. Describe the required field... |
+### Creator Object
 
-## Relation types
+The Creator Object captures information about the library or system that was used to generate this dataset.
 
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
+| Field Name |  Type  |                            Description                            |
+| ---------- | ------ | ----------------------------------------------------------------- |
+| library    | string | **REQUIRED**. Name of the system used to generate the dataset.    |
+| version    | string | **REQUIRED**. Version of the system used to generate the dataset. |
 
-| Type                | Description |
-| ------------------- | ----------- |
-| fancy-rel-type      | This link points to a fancy resource. |
+### Geo Column Object
+
+Additional geospatial metadata for geometry columns.
+
+| Field Name |     Type     |                                           Description                                           |
+| ---------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| crs        | string       | **REQUIRED**. The WKT representation of the column's coordinate reference system, if any.       |
+| encoding   | string       | How the geometries are encoding. Currently, this is likely the string "WKB".                    |
+| bbox       | \[ number \] | Bounding Box of the asset represented by this Item, formatted according to RFC 7946, section 5. |
 
 ## Contributing
 

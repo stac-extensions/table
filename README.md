@@ -31,6 +31,7 @@ Column objects contain information about each colum in the table.
 | ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | name        | number           | **REQUIRED**. The column name                                                                                              |
 | description | string           | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
+| type        | string           | Data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types.       |
 | metadata    | Map<string, Any> | Additional metadata for the column                                                                                         |
 
 ### Geo Arrow Metadata Object

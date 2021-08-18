@@ -44,16 +44,19 @@
       {
         "name": "geometry",
         "description": "The observation location.",
+        "type": "byte_array",
         "metadata": {}
       },
       {
         "name": "id",
         "description": "The numerical identifier",
+        "type": "int64",
         "metadata": {}
       },
       {
         "name": "value",
         "description": "The observed value",
+        "type": "float64",
         "metadata": {}
       }
     ],

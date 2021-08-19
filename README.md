@@ -1,8 +1,8 @@
 # Table Extension Specification
 
-- **Title:** Parquet Table
-- **Identifier:** <https://stac-extensions.github.io/parquet-table/v1.0.0/schema.json>
-- **Field Name Prefix:** parquet
+- **Title:** Table
+- **Identifier:** <https://stac-extensions.github.io/table/v1.0.0/schema.json>
+- **Field Name Prefix:** table
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @TomAugspurger

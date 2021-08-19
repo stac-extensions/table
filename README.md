@@ -8,7 +8,9 @@
 - **Owner**: @TomAugspurger
 
 This document explains the table Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+It can be used with the [projection] extension to describe geospatial tabular data.
+
+An item can describe *tabular data assets*, datasets that fit naturally into a database table, dataframe, or spreadsheet.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -18,49 +20,36 @@ This is the place to add a short introduction.
 
 ## Item Properties and Collection Fields
 
-|        Field Name        |                          Type                           |                       Description                       |
-| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------- |
-| table:columns            | [ [Column Object](#column-object) ]                     | **REQUIRED**. A list of objects describing each column. |
-| table:geo_arrow_metadata | [Geo Arrow Metadata Object](#geo-arrow-metadata-object) | The geospatial metadata for this table.                 |
+|       Field Name       |                Type                 |                            Description                            |
+| ---------------------- | ----------------------------------- | ----------------------------------------------------------------- |
+| table:columns          | [ [Column Object](#column-object) ] | **REQUIRED**. A list of (#column objects) describing each column. |
+| table:primary_geometry | string                              | The primary geometry column name.                                 |
+
+**table:primary_geometry** Is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
+to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
+values in `proj:espg`, `proj:bbox`, etc. refer to the `primary_geometry` column.
+
+## *Asset Object* fields
+
+The following fields can be used for assets (in the [`Asset Object`](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#asset-object)).
+
+|      Field Name       |       Type       |                 Description                  |
+| --------------------- | ---------------- | -------------------------------------------- |
+| table:storage_options | Map<string, any> | Additional keywords for opening the dataset. |
+
+``table:storage_options`` can be used with [fsspec](https://filesystem-spec.readthedocs.io/en/latest/) to specify additional keywords
+necessary to open the data. For example, an asset might use ``{"account_name": "ai4edataeuwest"}`` to indicate that the asset is
+in the ``ai4edataeuwest`` storage account. Libraries like [adlfs](https://github.com/dask/adlfs) use this information to open the dataset.
 
 ### Column Object
 
 Column objects contain information about each colum in the table.
 
-| Field Name  |       Type       |                                                        Description                                                         |
-| ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| name        | number           | **REQUIRED**. The column name                                                                                              |
-| description | string           | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
-| type        | string           | Data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types.       |
-| metadata    | Map<string, Any> | Additional metadata for the column                                                                                         |
-
-### Geo Arrow Metadata Object
-
-|   Field Name   |                         Type                         |                                Description                                |
-| -------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
-| primary_column | string                                               | The primary geometry column name. Used by systems like geopandas.         |
-| schema_version | string                                               | **REQUIRED**. The version of geo-arrow-spec the dataset was written with. |
-| creator        | Map<string, [Creator Object](#creator-object)>       | Information describing the system used to write the dataset.              |
-| columns        | Map<string, [Geo Column Object](#geo-column-object)> | The geometry information for each geometry column.                        |
-
-### Creator Object
-
-The Creator Object captures information about the library or system that was used to generate this dataset.
-
-| Field Name |  Type  |                            Description                            |
-| ---------- | ------ | ----------------------------------------------------------------- |
-| library    | string | **REQUIRED**. Name of the system used to generate the dataset.    |
-| version    | string | **REQUIRED**. Version of the system used to generate the dataset. |
-
-### Geo Column Object
-
-Additional geospatial metadata for geometry columns.
-
-| Field Name |     Type     |                                           Description                                           |
-| ---------- | ------------ | ----------------------------------------------------------------------------------------------- |
-| crs        | string       | **REQUIRED**. The WKT representation of the column's coordinate reference system, if any.       |
-| encoding   | string       | How the geometries are encoding. Currently, this is likely the string "WKB".                    |
-| bbox       | \[ number \] | Bounding Box of the asset represented by this Item, formatted according to RFC 7946, section 5. |
+| Field Name  |  Type  |                                                        Description                                                         |
+| ----------- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+| name        | number | **REQUIRED**. The column name                                                                                              |
+| description | string | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
+| type        | string | Data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types.       |
 
 ## Contributing
 
@@ -92,3 +81,7 @@ If the tests reveal formatting problems with the examples, you can fix them with
 ```bash
 npm run format-examples
 ```
+
+[geopandas]: https://geopandas.org/
+[sf]: https://r-spatial.github.io/sf/index.html
+[projection]: https://github.com/stac-extensions/projection

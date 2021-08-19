@@ -185,80 +185,15 @@
               "description": {
                 "type": "string"
               },
-              "metadata": {
-                "type": "object"
-              },
-              "pyarrow_type": {
+              "type": {
                 "type": "string"
               }
             }
           },
-          "table:geo_arrow_metadata": {
-            "type": "object",
-            "required": [
-              "schema_version"
-            ],
-            "properties": {
-              "primary_column": {
-                "type": "string"
-              },
-              "schema_version": {
-                "type": "string"
-              },
-              "creator": {
-                "$ref": "#/definitions/creator"
-              },
-              "columns": {
-                "$ref": "#/definitions/geo_column"
-              }
-            }
-          }
+          "additionalProperties": false
         },
-        "additionalProperties": false
-      },
-      "creator": {
-        "type": "object",
-        "required": [
-          "library",
-          "version"
-        ],
-        "properties": {
-          "library": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          }
-        }
-      },
-      "geo_column": {
-        "type": "object",
-        "required": [
-          "crs"
-        ],
-        "properties": {
-          "crs": {
-            "type": "string"
-          },
-          "encoding": {
-            "type": "string"
-          },
-          "bbox": {
-            "type": "array",
-            "oneOf": [
-              {
-                "minItems": 4,
-                "maxItems": 4
-              },
-              {
-                "minItems": 6,
-                "maxItems": 6
-              }
-            ],
-            "items": {
-              "type": "number"
-            }
-          }
+        "table:primary_geometry": {
+          "type": "string"
         }
       }
     }

@@ -52,20 +52,26 @@
     {
       "name": "geometry",
       "description": "The observation location.",
-      "metadata": {}
+      "type": "int64"
     },
     {
       "name": "id",
-      "description": "The numerical identifier",
-      "metadata": {}
+      "description": "The numerical identifier"
     },
     {
-      "name": "value",
-      "description": "The observed value",
-      "metadata": {}
+      "name": "value"
     }
   ],
   "table:primary_geometry": "geometry",
+  "table:tables": [
+    {
+      "name": "first table",
+      "description": "This is my first table"
+    },
+    {
+      "name": "Second table"
+    }
+  ],
   "links": [
     {
       "href": "https://example.com/examples/collection.json",

@@ -171,6 +171,24 @@
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
       "properties": {
+        "table:tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
         "table:columns": {
           "type": "array",
           "items": {

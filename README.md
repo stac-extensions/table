@@ -29,6 +29,16 @@ An item can describe *tabular data assets*, datasets that fit naturally into a d
 to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
 values in `proj:espg`, `proj:bbox`, etc. refer to the `primary_geometry` column.
 
+### Column Object
+
+Column objects contain information about each colum in the table.
+
+| Field Name  |  Type  |                                                        Description                                                         |
+| ----------- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+| name        | string | **REQUIRED**. The column name                                                                                              |
+| description | string | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
+| type        | string | Data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types.       |
+
 ## *Asset Object* fields
 
 The following fields can be used for assets (in the [`Asset Object`](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#asset-object)).
@@ -41,15 +51,40 @@ The following fields can be used for assets (in the [`Asset Object`](https://git
 necessary to open the data. For example, an asset might use ``{"account_name": "ai4edataeuwest"}`` to indicate that the asset is
 in the ``ai4edataeuwest`` storage account. Libraries like [adlfs](https://github.com/dask/adlfs) use this information to open the dataset.
 
-### Column Object
+## Collection Fields
 
-Column objects contain information about each colum in the table.
+The following fields apply only to
+[Collections](https://github.com/radiantearth/stac-spec/blob/master/collection-spec/collection-spec.md).
+They can be used to catalog a collection of tables, where each table is stored as an `Item`, without
+having to include column-level metadata from each table on the Collection.
+
+|  Field Name  |                    Type                    |               Description                |
+| ------------ | ------------------------------------------ | ---------------------------------------- |
+| table:tables | Map<string, [Table Object](#table-object)> | **REQUIRED** A mapping of table names to |
+
+### Table Object
+
+Table objects contain high-level summaries about a table.
 
 | Field Name  |  Type  |                                                        Description                                                         |
 | ----------- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
-| name        | number | **REQUIRED**. The column name                                                                                              |
+| name        | string | **REQUIRED**. The table name                                                                                               |
 | description | string | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
-| type        | string | Data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types.       |
+
+## Best Practices
+
+STAC allows for some flexibility in how to catalog assets. In general, we recommend using the following hierarchy:
+
+- Use `Collection` objects to catalog a dataset consisting of one or more tables.
+- Use `Item` objects to catalog an individual table.
+
+For a dataset consisting of a single table or many tables with the same schema (for example
+[gbif](https://github.com/microsoft/AIforEarthDataSets/blob/main/data/gbif.md), which provides snapshots of the same database at
+different points in time), you might include `table:columns` on the `Collection` itself, or both the `Collection` and `items`.
+
+For datasets with many tables (for example, [USF Forest Inventory and Analysis](https://github.com/microsoft/AIforEarthDataSets/blob/main/data/forest-inventory-and-analysis.md)),
+we recommend cataloging just the *tables* at the Collection level in `table:tables`, and cataloging the the columns at just the `Item` level in `table:columns`
+on each Item.
 
 ## Contributing
 

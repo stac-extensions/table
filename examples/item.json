@@ -57,7 +57,8 @@
         "type": "float64"
       }
     ],
-    "table:primary_geometry": "geometry"
+    "table:primary_geometry": "geometry",
+    "table:row_count": 100
   },
   "links": [
     {

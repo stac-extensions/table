@@ -24,6 +24,7 @@ An item can describe *tabular data assets*, datasets that fit naturally into a d
 | ---------------------- | ----------------------------------- | ----------------------------------------------------------------- |
 | table:columns          | [ [Column Object](#column-object) ] | **REQUIRED**. A list of (#column objects) describing each column. |
 | table:primary_geometry | string                              | The primary geometry column name.                                 |
+| table:row_count        | number                              | The number of rows in the dataset.                                |
 
 **table:primary_geometry** Is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
 to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the

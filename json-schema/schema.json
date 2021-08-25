@@ -212,6 +212,9 @@
         },
         "table:primary_geometry": {
           "type": "string"
+        },
+        "table:row_count": {
+          "type": "number"
         }
       }
     }

@@ -10,7 +10,8 @@
 This document explains the table Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 It can be used with the [projection] extension to describe geospatial tabular data.
 
-An item can describe *tabular data assets*, datasets that fit naturally into a database table, dataframe, or spreadsheet.
+An Collection or Item can describe a *tabular data assets*, using a list of [Column objects](#column-object).
+Additionally, Collections can describe many tabular datasets using [Table objects](#table-object).
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item

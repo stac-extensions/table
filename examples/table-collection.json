@@ -48,21 +48,15 @@
       "maximum": "2019-07-10T13:44:56Z"
     }
   },
-  "table:columns": [
+  "table:tables": [
     {
-      "name": "geometry",
-      "description": "The observation location.",
-      "type": "int64"
+      "name": "first table",
+      "description": "This is my first table"
     },
     {
-      "name": "id",
-      "description": "The numerical identifier"
-    },
-    {
-      "name": "value"
+      "name": "Second table"
     }
   ],
-  "table:primary_geometry": "geometry",
   "links": [
     {
       "href": "https://example.com/examples/collection.json",

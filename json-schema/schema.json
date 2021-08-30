@@ -25,9 +25,7 @@
               "allOf": [
                 {
                   "$comment": "Require fields here for Item Properties.",
-                  "required": [
-                    "table:columns"
-                  ]
+                  "required": []
                 },
                 {
                   "$ref": "#/definitions/fields"
@@ -69,9 +67,7 @@
           "allOf": [
             {
               "$comment": "Require fields here for Collections (top-level).",
-              "required": [
-                "table:columns"
-              ]
+              "required": []
             },
             {
               "$ref": "#/definitions/fields"
@@ -161,9 +157,7 @@
       "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
       "anyOf": [
         {
-          "required": [
-            "table:columns"
-          ]
+          "required": []
         }
       ]
     },

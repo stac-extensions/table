@@ -23,7 +23,7 @@ Additionally, Collections can describe many tabular datasets using [Table object
 
 |       Field Name       |                Type                 |                            Description                            |
 | ---------------------- | ----------------------------------- | ----------------------------------------------------------------- |
-| table:columns          | [ [Column Object](#column-object) ] | **REQUIRED**. A list of (#column objects) describing each column. |
+| table:columns          | [ [Column Object](#column-object) ] | A list of (#column objects) describing each column. |
 | table:primary_geometry | string                              | The primary geometry column name.                                 |
 | table:row_count        | number                              | The number of rows in the dataset.                                |
 

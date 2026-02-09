@@ -1,216 +1,225 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/table/v1.2.0/schema.json#",
+  "$id": "https://stac-extensions.github.io/table/v1.2.0/schema.json",
   "title": "Table Extension",
   "description": "STAC Table Extension for STAC Items and STAC Collections.",
+  "type": "object",
+  "required": [
+    "stac_extensions"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+      }
+    }
+  },
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/stac_extensions"
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "assets"
+      ],
+      "properties": {
+        "type": {
+          "const": "Feature"
         },
-        {
+        "properties": {
+          "$ref": "#/definitions/fields"
+        },
+        "assets": {
           "type": "object",
-          "required": [
-            "type",
-            "properties",
-            "assets"
-          ],
-          "properties": {
-            "type": {
-              "const": "Feature"
-            },
-            "properties": {
-              "allOf": [
-                {
-                  "$comment": "Require fields here for Item Properties.",
-                  "required": []
-                },
-                {
-                  "$ref": "#/definitions/fields"
-                }
-              ]
-            },
-            "assets": {
-              "$comment": "This validates the fields in Item Assets, but does not require them.",
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/definitions/fields"
-              }
-            }
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
           }
         }
-      ]
+      }
     },
     {
       "$comment": "This is the schema for STAC Collections.",
       "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "Collection"
+        },
+        "item_assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
+          }
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
+          }
+        },
+        "summaries": {
+          "type": "object",
+          "properties": {
+            "table:row_count": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:row_count"
+                  }
+                }
+              ]
+            },
+            "table:primary_geometry": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:primary_geometry"
+                  }
+                }
+              ]
+            },
+            "table:primary_datetime": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:primary_datetime"
+                  }
+                }
+              ]
+            },
+            "table:columns": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:columns"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
       "allOf": [
         {
-          "required": [
-            "type"
-          ],
-          "properties": {
-            "type": {
-              "const": "Collection"
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/stac_extensions"
-        }
-      ],
-      "anyOf": [
-        {
-          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
-          "allOf": [
-            {
-              "$comment": "Require fields here for Collections (top-level).",
-              "required": []
-            },
-            {
-              "$ref": "#/definitions/fields"
-            }
-          ]
-        },
-        {
-          "$comment": "This validates the fields in Collection Assets, but does not require them.",
-          "required": [
-            "assets"
-          ],
-          "properties": {
-            "assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
-          "required": [
-            "item_assets"
-          ],
-          "properties": {
-            "item_assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
-          "required": [
-            "summaries"
-          ],
-          "properties": {
-            "summaries": {
-              "$ref": "#/definitions/require_any_field"
-            }
-          }
+          "$ref": "#/definitions/fields"
         }
       ]
     }
   ],
   "definitions": {
-    "stac_extensions": {
+    "fields": {
       "type": "object",
-      "required": [
-        "stac_extensions"
-      ],
       "properties": {
-        "stac_extensions": {
-          "type": "array",
-          "contains": {
-            "const": "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+        "table:row_count": {
+          "$ref": "#/definitions/table:row_count"
+        },
+        "table:primary_geometry": {
+          "$ref": "#/definitions/table:primary_geometry"
+        },
+        "table:primary_datetime": {
+          "$ref": "#/definitions/table:primary_datetime"
+        },
+        "table:columns": {
+          "$ref": "#/definitions/table:columns"
+        },
+        "table:tables": {
+          "$ref": "#/definitions/table:tables"
+        }
+      },
+      "patternProperties": {
+        "^(?!table:)": {}
+      },
+      "additionalProperties": false
+    },
+    "table:tables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "table:columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "geometry_type": {
+            "type": "string",
+            "enum": [
+              "Point",
+              "LineString",
+              "Polygon",
+              "MultiPoint",
+              "MultiLineString",
+              "MultiPolygon"
+            ]
           }
         }
       }
     },
-    "require_any_field": {
-      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
-      "anyOf": [
-        {
-          "required": []
-        }
-      ]
+    "table:primary_geometry": {
+      "type": "string"
     },
-    "fields": {
-      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
-      "type": "object",
-      "properties": {
-        "table:tables": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name"
-            ],
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              }
-            }
-          },
-          "additionalProperties": false
-        },
-        "table:columns": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name"
-            ],
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              }
-            }
-          },
-          "additionalProperties": false
-        },
-        "table:primary_geometry": {
-          "type": "string"
-        },
-        "table:row_count": {
-          "type": "number"
-        }
-      }
+    "table:primary_datetime": {
+      "type": "string"
+    },
+    "table:row_count": {
+      "type": "number",
+      "minimum": 0
+    },
+    "json_schema": {
+      "$comment": "JSON Schema",
+      "type": "object"
     }
   }
 }

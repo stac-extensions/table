@@ -34,6 +34,12 @@ The fields in the table below can be used in these parts of STAC documents:
 | table:primary_datetime | string                             | The primary date/time column name. |
 | table:row_count        | number                             | The number of rows in the dataset. |
 
+### table:primary_geometry
+
+This is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
+to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
+values in `proj:espg`, `proj:bbox`, etc. that (implicitly) apply to the asset refer to the `primary_geometry` column.
+
 ---
 
 The fields in the table below can be used in these parts of STAC documents:
@@ -43,6 +49,14 @@ The fields in the table below can be used in these parts of STAC documents:
 | Field Name             | Type                                | Description |
 | ---------------------- | ----------------------------------- | ----------- |
 | table:storage_options  | Map<string, any>                    | **DEPRECATED** Additional keywords for opening the dataset. |
+
+### table:storage_options
+
+This can be used with [fsspec](https://filesystem-spec.readthedocs.io/en/latest/) to specify additional keywords
+necessary to open the data. For example, an asset might use ``{"account_name": "ai4edataeuwest"}`` to indicate that the asset is
+in the ``ai4edataeuwest`` storage account. Libraries like [adlfs](https://github.com/dask/adlfs) use this information to open the dataset.
+
+A potential alternative for storage options could be the [Storage Extension](https://github.com/stac-extensions/storage).
 
 ---
 
@@ -57,21 +71,11 @@ having to include column-level metadata from each table on the Collection.
 
 |  Field Name  |                    Type                    |               Description                  |
 | ------------ | ------------------------------------------ | ------------------------------------------ |
-| table:tables | Map<string, [Table Object](#table-object)> | **DEPRECATED** A mapping of table names to |
+| table:tables | Map<string, [Table Object](#table-object)> | **DEPRECATED** A mapping of table names to Table Objects (see below). |
 
-### table:primary_geometry
+---
 
-This is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
-to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
-values in `proj:espg`, `proj:bbox`, etc. that (implicitly) apply to the asset refer to the `primary_geometry` column.
-
-### table:storage_options
-
-This can be used with [fsspec](https://filesystem-spec.readthedocs.io/en/latest/) to specify additional keywords
-necessary to open the data. For example, an asset might use ``{"account_name": "ai4edataeuwest"}`` to indicate that the asset is
-in the ``ai4edataeuwest`` storage account. Libraries like [adlfs](https://github.com/dask/adlfs) use this information to open the dataset.
-
-### Column Object
+## Column Object
 
 Column objects contain information about each colum in the table.
 
@@ -91,7 +95,7 @@ can be used in the Column Object.
 Columns can also include additional information from other extensions that are not otherwise covered on the asset-level
 and are column specific, e.g. [projection] extension information for additional geometry columns.
 
-#### geometry_type
+### geometry_type
 
 Describes the geometry type provided by the column. Do not provide the property, if mixed geometry types occur.
 
@@ -104,7 +108,7 @@ Must be one of the GeoJSON geometry types:
 - `Polygon`
 - `MultiPolygon`
 
-### Table Object
+## Table Object
 
 **DEPRECATED:** Table objects contain high-level summaries about a table.
 

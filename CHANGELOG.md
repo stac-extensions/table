@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `geometry_type` property to Column Object
 - Added `table:primary_datetime`
 - Allow most fields also in the Asset Object
 

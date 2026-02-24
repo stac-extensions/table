@@ -84,29 +84,18 @@ Column objects contain information about each colum in the table.
 | name          | string | **REQUIRED**. The column name. |
 | description   | string | Detailed multi-line description to explain the dimension. CommonMark 0.29 syntax MAY be used for rich text representation. |
 | type          | string | Native data type of the column. If using a file format with a type system (like Parquet), we recommend you use those types. |
-| geometry_type | string | Geometry type provided by the column. Only applies to geometry columns, e.g. the column identified by the `table:primary_geometry`. |
 
 Other properties such as `description`, `license`, `unit`, `data_type` and `statistics` from
 [STAC common metadata](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md)
 can be used in the Column Object.
 
+It is also recommended to add `vector:geometry_types` from the [Vector Extension](https://github.com/stac-extensions/vector)
+to the column that describe geometry data, e.g. the column identified by the `table:primary_geometry` field.
+
 `type` and `data_type` describe the same information, but `type` should use the native name in the given file format and `data_type` describes the [standardized data type name according to the STAC specification](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types).
 
 Columns can also include additional information from other extensions that are not otherwise covered on the asset-level
 and are column specific, e.g. [projection] extension information for additional geometry columns.
-
-### geometry_type
-
-Describes the geometry type provided by the column. Do not provide the property, if mixed geometry types occur.
-
-Must be one of the GeoJSON geometry types:
-
-- `Point`
-- `MultiPoint`
-- `LineString`
-- `MultiLineString`
-- `Polygon`
-- `MultiPolygon`
 
 ## Table Object
 

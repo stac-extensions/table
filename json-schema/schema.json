@@ -192,17 +192,6 @@
           "type": {
             "type": "string",
             "minLength": 1
-          },
-          "geometry_type": {
-            "type": "string",
-            "enum": [
-              "Point",
-              "LineString",
-              "Polygon",
-              "MultiPoint",
-              "MultiLineString",
-              "MultiPolygon"
-            ]
           }
         }
       }

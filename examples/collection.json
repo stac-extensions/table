@@ -1,7 +1,8 @@
 {
   "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+    "https://stac-extensions.github.io/vector/v0.1.0/schema.json"
   ],
   "type": "Collection",
   "id": "collection",
@@ -36,7 +37,9 @@
           "name": "geometry",
           "description": "The observation location.",
           "type": "binary",
-          "geometry_type": "Polygon"
+          "vector:geometry_types": [
+            "Polygon"
+          ]
         },
         {
           "name": "datetime",

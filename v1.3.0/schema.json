@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/table/v1.3.0/schema.json",
+  "title": "Table Extension",
+  "description": "STAC Table Extension for STAC Items and STAC Collections.",
+  "type": "object",
+  "required": [
+    "stac_extensions"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/table/v1.3.0/schema.json"
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
+      "type": "object",
+      "required": [
+        "type",
+        "properties",
+        "assets"
+      ],
+      "properties": {
+        "type": {
+          "const": "Feature"
+        },
+        "properties": {
+          "$ref": "#/definitions/fields"
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
+          }
+        }
+      }
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "Collection"
+        },
+        "item_assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
+          }
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/fields"
+          }
+        },
+        "summaries": {
+          "type": "object",
+          "properties": {
+            "table:row_count": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:row_count"
+                  }
+                }
+              ]
+            },
+            "table:primary_geometry": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:primary_geometry"
+                  }
+                }
+              ]
+            },
+            "table:primary_datetime": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:primary_datetime"
+                  }
+                }
+              ]
+            },
+            "table:columns": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:columns"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/fields"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "fields": {
+      "type": "object",
+      "properties": {
+        "table:row_count": {
+          "$ref": "#/definitions/table:row_count"
+        },
+        "table:primary_geometry": {
+          "$ref": "#/definitions/table:primary_geometry"
+        },
+        "table:primary_datetime": {
+          "$ref": "#/definitions/table:primary_datetime"
+        },
+        "table:columns": {
+          "$ref": "#/definitions/table:columns"
+        },
+        "table:storage_options": {
+          "$ref": "#/definitions/table:storage_options"
+        },
+        "table:tables": {
+          "$ref": "#/definitions/table:tables"
+        }
+      },
+      "patternProperties": {
+        "^(?!table:)": {}
+      },
+      "additionalProperties": false
+    },
+    "table:tables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "table:storage_options": {
+      "type": "object"
+    },
+    "table:columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "table:primary_geometry": {
+      "type": "string"
+    },
+    "table:primary_datetime": {
+      "type": "string"
+    },
+    "table:row_count": {
+      "type": "number",
+      "minimum": 0
+    },
+    "json_schema": {
+      "$comment": "JSON Schema",
+      "type": "object"
+    }
+  }
+}

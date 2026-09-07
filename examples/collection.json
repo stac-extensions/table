@@ -1,8 +1,8 @@
 {
-  "stac_version": "1.0.0",
+  "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/table/v1.2.0/schema.json"
+    "https://stac-extensions.github.io/table/v1.2.0/schema.json",
+    "https://stac-extensions.github.io/vector/v0.1.0/schema.json"
   ],
   "type": "Collection",
   "id": "collection",
@@ -31,7 +31,32 @@
   },
   "assets": {
     "example": {
-      "href": "https://example.com/examples/file.xyz"
+      "href": "https://example.com/examples/stac.geoparquet",
+      "table:columns": [
+        {
+          "name": "geometry",
+          "description": "The observation location.",
+          "type": "binary",
+          "vector:geometry_types": [
+            "Polygon"
+          ]
+        },
+        {
+          "name": "datetime",
+          "description": "The observation datetime.",
+          "type": "datetime"
+        },
+        {
+          "name": "id",
+          "description": "The numerical identifier",
+          "type": "int64"
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "table:primary_geometry": "geometry",
+      "table:primary_datetime": "datetime"
     }
   },
   "item_assets": {
@@ -48,21 +73,6 @@
       "maximum": "2019-07-10T13:44:56Z"
     }
   },
-  "table:columns": [
-    {
-      "name": "geometry",
-      "description": "The observation location.",
-      "type": "int64"
-    },
-    {
-      "name": "id",
-      "description": "The numerical identifier"
-    },
-    {
-      "name": "value"
-    }
-  ],
-  "table:primary_geometry": "geometry",
   "links": [
     {
       "href": "https://example.com/examples/collection.json",

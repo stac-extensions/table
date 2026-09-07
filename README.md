@@ -71,7 +71,7 @@ having to include column-level metadata from each table on the Collection.
 
 |  Field Name  |                    Type                    |               Description                  |
 | ------------ | ------------------------------------------ | ------------------------------------------ |
-| table:tables | Map<string, [Table Object](#table-object)> | **DEPRECATED** A mapping of table names to Table Objects (see below). |
+| table:tables | \[[Table Object](#table-object)] | **DEPRECATED** A list of Table Objects (see below). |
 
 ---
 

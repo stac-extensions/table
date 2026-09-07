@@ -146,6 +146,9 @@
         "table:columns": {
           "$ref": "#/definitions/table:columns"
         },
+        "table:storage_options": {
+          "$ref": "#/definitions/table:storage_options"
+        },
         "table:tables": {
           "$ref": "#/definitions/table:tables"
         }
@@ -171,6 +174,9 @@
           }
         }
       }
+    },
+    "table:storage_options": {
+      "type": "object"
     },
     "table:columns": {
       "type": "array",

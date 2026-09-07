@@ -5,7 +5,7 @@
 - **Field Name Prefix:** table
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Pilot
-- **Owner**: @TomAugspurger
+- **Owner**: @m-mohr, @TomAugspurger
 
 This document explains the table Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 It can be used with the [projection] extension to describe geospatial tabular data.

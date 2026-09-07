@@ -170,8 +170,7 @@
             "type": "string"
           }
         }
-      },
-      "additionalProperties": false
+      }
     },
     "table:columns": {
       "type": "array",

@@ -29,7 +29,7 @@ The fields in the table below can be used in these parts of STAC documents:
 
 | Field Name             | Type                               | Description |
 | ---------------------- | ---------------------------------- | ----------- |
-| table:columns          | \[[Column Object](#column-object)] | A list of (#column objects) describing each column. |
+| table:columns          | \[[Column Object](#column-object)] | A list of Column Objects describing each column. |
 | table:primary_geometry | string                             | The primary geometry column name. |
 | table:primary_datetime | string                             | The primary date/time column name. |
 | table:row_count        | number                             | The number of rows in the dataset. |
@@ -38,7 +38,7 @@ The fields in the table below can be used in these parts of STAC documents:
 
 This is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
 to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
-values in `proj:espg`, `proj:bbox`, etc. that (implicitly) apply to the asset refer to the `primary_geometry` column.
+values in `proj:code`, `proj:bbox`, etc. that (implicitly) apply to the asset refer to the `primary_geometry` column.
 
 ---
 
@@ -77,7 +77,7 @@ having to include column-level metadata from each table on the Collection.
 
 ## Column Object
 
-Column objects contain information about each colum in the table.
+Column objects contain information about each column in the table.
 
 | Field Name    |  Type  | Description |
 | ------------- | ------ | ----------- |
@@ -90,7 +90,7 @@ Other properties such as `description`, `license`, `unit`, `data_type` and `stat
 can be used in the Column Object.
 
 It is also recommended to add `vector:geometry_types` from the [Vector Extension](https://github.com/stac-extensions/vector)
-to the column that describe geometry data, e.g. the column identified by the `table:primary_geometry` field.
+to the columns that describe geometry data, e.g. the column identified by the `table:primary_geometry` field.
 
 `type` and `data_type` describe the same information, but `type` should use the native name in the given file format and `data_type` describes the [standardized data type name according to the STAC specification](https://github.com/radiantearth/stac-spec/blob/master/commons/common-metadata.md#data-types).
 
@@ -118,7 +118,7 @@ For a dataset consisting of a single table or many tables with the same schema (
 different points in time), you might include `table:columns` on the `Collection` itself, or both the `Collection` and `items`.
 
 For datasets with many tables (for example, [USF Forest Inventory and Analysis](https://github.com/microsoft/AIforEarthDataSets/blob/main/data/forest-inventory-and-analysis.md)),
-we recommend cataloging the the columns at just the `Item` level in `table:columns`
+we recommend cataloging the columns at just the `Item` level in `table:columns`
 on each Item.
 
 ## Contributing

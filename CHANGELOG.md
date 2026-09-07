@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## [v1.3.0] - 2026-09-07
+
+### Added
+
 - Added `table:primary_datetime`
 - Allow most fields also in the Asset Object
 
@@ -20,8 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `table:storage_options`: The property is not specific to tables but specific to fsspec. It should be generalized.
 - `table:tables`: Tables in collections should be summarized using Item Asset Definitions or Collection Summaries instead.
-
-### Removed
 
 ### Fixed
 
@@ -48,7 +58,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release.
 
-[Unreleased]: <https://github.com/stac-extensions/table/compare/v1.0.0...HEAD>
+[Unreleased]: <https://github.com/stac-extensions/table/compare/v1.3.0...HEAD>
+[v1.3.0]: <https://github.com/stac-extensions/table/compare/v1.2.0...v1.3.0>
 [v1.2.0]: <https://github.com/stac-extensions/table/tree/v1.2.0>
 [v1.1.0]: <https://github.com/stac-extensions/table/tree/v1.1.0>
 [v1.0.1]: <https://github.com/stac-extensions/table/tree/v1.0.1>

@@ -56,7 +56,11 @@
         }
       ],
       "table:primary_geometry": "geometry",
-      "table:primary_datetime": "datetime"
+      "table:primary_datetime": "datetime",
+      "table:primary_key": [
+        "id",
+        "datetime"
+      ]
     }
   },
   "item_assets": {

@@ -49,16 +49,6 @@ A composite key lists every column e.g. `["station_id", "datetime"]`.
 
 Each name should match the `name` of a [Column Object](#column-object) in `table:columns` when that field is present.
 
-The key is declared by the publisher and is informational.
-STAC does not check that key values are unique, though the publisher's pipeline or the engine that stores the data may.
-Clients can use the key to identify rows, for example to join tables or to apply updates.
-
-The key applies to the table that the Collection, Item or Asset it is set on describes.
-If one table is split across several files or Items, the key identifies a row across all of them,
-so set it where the whole table is described, such as the Collection or a table-level asset.
-Separate snapshots of a table, such as one per version, are separate tables:
-the same key value can appear in more than one snapshot.
-
 ---
 
 The fields in the table below can be used in these parts of STAC documents:

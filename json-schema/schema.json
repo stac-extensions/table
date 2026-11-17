@@ -106,6 +106,20 @@
                 }
               ]
             },
+            "table:primary_key": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/json_schema"
+                },
+                {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/definitions/table:primary_key"
+                  }
+                }
+              ]
+            },
             "table:columns": {
               "oneOf": [
                 {
@@ -142,6 +156,9 @@
         },
         "table:primary_datetime": {
           "$ref": "#/definitions/table:primary_datetime"
+        },
+        "table:primary_key": {
+          "$ref": "#/definitions/table:primary_key"
         },
         "table:columns": {
           "$ref": "#/definitions/table:columns"
@@ -206,6 +223,15 @@
     },
     "table:primary_datetime": {
       "type": "string"
+    },
+    "table:primary_key": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "table:row_count": {
       "type": "number",

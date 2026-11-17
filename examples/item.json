@@ -68,6 +68,9 @@
         }
       ],
       "table:primary_geometry": "geometry",
+      "table:primary_key": [
+        "id"
+      ],
       "table:row_count": 100
     }
   }

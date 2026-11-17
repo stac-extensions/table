@@ -32,6 +32,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | table:columns          | \[[Column Object](#column-object)] | A list of Column Objects describing each column. |
 | table:primary_geometry | string                             | The primary geometry column name. |
 | table:primary_datetime | string                             | The primary date/time column name. |
+| table:primary_key      | \[string]                          | The column names that make up the primary key, in key order. |
 | table:row_count        | number                             | The number of rows in the dataset. |
 
 ### table:primary_geometry
@@ -39,6 +40,14 @@ The fields in the table below can be used in these parts of STAC documents:
 This is the column name of the "primary" or "active" geometry. This is used by libraries like [geopandas] and [sf]
 to control which geometry column is used. When a STAC item uses both the [projection] and `table` extensions, it's understood that the
 values in `proj:code`, `proj:bbox`, etc. that (implicitly) apply to the asset refer to the `primary_geometry` column.
+
+### table:primary_key
+
+The column names that make up the primary key, in key order.
+A single-column key is a list with one name e.g. `["id"]`.
+A composite key lists every column e.g. `["station_id", "datetime"]`.
+
+Each name should match the `name` of a [Column Object](#column-object) in `table:columns` when that field is present.
 
 ---
 
